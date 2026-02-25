@@ -1,0 +1,227 @@
+// ============================================
+// KPLƆ́N NǓ — Mock Data Store
+// ============================================
+
+export const COURSES = [
+  {
+    id: 1,
+    title: 'Algorithmes et Structures de Données',
+    subject: 'Informatique',
+    professor: 'Prof. Koffi Ahouant',
+    professorId: 2,
+    description: 'Introduction aux algorithmes fondamentaux et structures de données : listes, arbres, graphes, tri et recherche.',
+    thumbnail: null,
+    color: '#F0A500',
+    level: 'Licence 2',
+    studentsCount: 87,
+    chaptersCount: 8,
+    duration: '24h',
+    rating: 4.8,
+    progress: 65,
+    isEnrolled: true,
+    tags: ['Algorithmes', 'C++', 'Python'],
+    chapters: [
+      { id: 1, title: 'Introduction aux algorithmes', duration: '45min', type: 'video', completed: true },
+      { id: 2, title: 'Complexité algorithmique', duration: '50min', type: 'video', completed: true },
+      { id: 3, title: 'Listes chaînées', duration: '1h', type: 'video', completed: true },
+      { id: 4, title: 'Piles et Files', duration: '55min', type: 'video', completed: false },
+      { id: 5, title: 'Arbres binaires', duration: '1h10', type: 'video', completed: false },
+      { id: 6, title: 'TP : Implémentation liste chaînée', duration: '2h', type: 'tp', completed: false },
+      { id: 7, title: 'Graphes et BFS/DFS', duration: '1h20', type: 'video', completed: false },
+      { id: 8, title: 'Algorithmes de tri', duration: '1h', type: 'video', completed: false },
+    ],
+  },
+  {
+    id: 2,
+    title: 'Bases de Données Avancées',
+    subject: 'Informatique',
+    professor: 'Prof. Koffi Ahouant',
+    professorId: 2,
+    description: 'PostgreSQL, modélisation avancée, triggers, procédures stockées, optimisation des requêtes.',
+    thumbnail: null,
+    color: '#00C9A7',
+    level: 'Licence 3',
+    studentsCount: 54,
+    chaptersCount: 6,
+    duration: '18h',
+    rating: 4.6,
+    progress: 30,
+    isEnrolled: true,
+    tags: ['SQL', 'PostgreSQL', 'Modélisation'],
+    chapters: [
+      { id: 1, title: 'Rappels SQL et modèles relationnels', duration: '1h', type: 'video', completed: true },
+      { id: 2, title: 'Normalisation et formes normales', duration: '1h30', type: 'video', completed: false },
+      { id: 3, title: 'Triggers et procédures stockées', duration: '2h', type: 'video', completed: false },
+      { id: 4, title: 'TP : Conception d\'un schéma BD', duration: '3h', type: 'tp', completed: false },
+      { id: 5, title: 'Optimisation des requêtes', duration: '1h15', type: 'video', completed: false },
+      { id: 6, title: 'Transactions et concurrence', duration: '1h', type: 'video', completed: false },
+    ],
+  },
+  {
+    id: 3,
+    title: 'Développement Web — React.js',
+    subject: 'Développement Web',
+    professor: 'Prof. Koffi Ahouant',
+    professorId: 2,
+    description: 'React.js de A à Z : composants, hooks, state management, routing, et déploiement.',
+    thumbnail: null,
+    color: '#8B5CF6',
+    level: 'Licence 3',
+    studentsCount: 112,
+    chaptersCount: 10,
+    duration: '30h',
+    rating: 4.9,
+    progress: 10,
+    isEnrolled: true,
+    tags: ['React', 'JavaScript', 'Frontend'],
+    chapters: [
+      { id: 1, title: 'Introduction à React', duration: '1h', type: 'video', completed: true },
+      { id: 2, title: 'JSX et composants', duration: '1h30', type: 'video', completed: false },
+      { id: 3, title: 'State et Props', duration: '2h', type: 'video', completed: false },
+      { id: 4, title: 'Hooks essentiels', duration: '2h30', type: 'video', completed: false },
+      { id: 5, title: 'React Router', duration: '1h', type: 'video', completed: false },
+      { id: 6, title: 'Gestion d\'état globale', duration: '2h', type: 'video', completed: false },
+      { id: 7, title: 'TP : Application Todo', duration: '3h', type: 'tp', completed: false },
+      { id: 8, title: 'Appels API avec Axios', duration: '1h30', type: 'video', completed: false },
+      { id: 9, title: 'Optimisation et performance', duration: '1h', type: 'video', completed: false },
+      { id: 10, title: 'Déploiement', duration: '1h', type: 'video', completed: false },
+    ],
+  },
+  {
+    id: 4,
+    title: 'Mathématiques Discrètes',
+    subject: 'Mathématiques',
+    professor: 'Prof. Koffi Ahouant',
+    professorId: 2,
+    description: 'Logique, théorie des ensembles, combinatoire, théorie des graphes.',
+    thumbnail: null,
+    color: '#FF6B6B',
+    level: 'Licence 1',
+    studentsCount: 203,
+    chaptersCount: 7,
+    duration: '21h',
+    rating: 4.4,
+    progress: 0,
+    isEnrolled: false,
+    tags: ['Logique', 'Graphes', 'Combinatoire'],
+    chapters: [],
+  },
+];
+
+export const QUIZZES = [
+  {
+    id: 1,
+    courseId: 1,
+    title: 'Quiz : Complexité algorithmique',
+    questions: [
+      {
+        id: 1,
+        question: 'Quelle est la complexité temporelle du tri à bulles dans le pire des cas ?',
+        options: ['O(n)', 'O(n log n)', 'O(n²)', 'O(log n)'],
+        correct: 2,
+        explanation: 'Le tri à bulles effectue n-1 passes, chacune comparant jusqu\'à n-1 éléments, soit O(n²) dans le pire cas.',
+      },
+      {
+        id: 2,
+        question: 'Quelle structure de données utilise le principe LIFO ?',
+        options: ['File', 'Pile', 'Arbre', 'Graphe'],
+        correct: 1,
+        explanation: 'Une pile (stack) suit le principe Last In, First Out (LIFO).',
+      },
+      {
+        id: 3,
+        question: 'Quelle est la complexité de la recherche dichotomique ?',
+        options: ['O(1)', 'O(n)', 'O(log n)', 'O(n²)'],
+        correct: 2,
+        explanation: 'La recherche dichotomique divise l\'espace de recherche par 2 à chaque étape : O(log n).',
+      },
+    ],
+  },
+];
+
+export const FLASHCARDS = [
+  {
+    id: 1,
+    courseId: 1,
+    front: 'Qu\'est-ce qu\'une liste chaînée ?',
+    back: 'Une structure de données linéaire où chaque élément (nœud) contient une valeur et un pointeur vers l\'élément suivant.',
+    mastered: false,
+  },
+  {
+    id: 2,
+    courseId: 1,
+    front: 'Définir la notation Big O',
+    back: 'Notation mathématique décrivant la complexité algorithmique dans le cas le plus défavorable, mesurant comment le temps d\'exécution croît en fonction de la taille de l\'entrée.',
+    mastered: true,
+  },
+  {
+    id: 3,
+    courseId: 1,
+    front: 'Différence entre BFS et DFS ?',
+    back: 'BFS (Breadth-First Search) explore niveau par niveau (file). DFS (Depth-First Search) explore en profondeur d\'abord (pile ou récursion).',
+    mastered: false,
+  },
+];
+
+export const NOTIFICATIONS = [
+  { id: 1, type: 'course', message: 'Nouveau cours publié : "Algorithmes de tri avancés"', time: '2h', read: false },
+  { id: 2, type: 'challenge', message: 'Défi journalier disponible ! 10 min de révision', time: '8h', read: false },
+  { id: 3, type: 'reminder', message: 'Rappel : Révision "Listes chaînées" recommandée', time: '1j', read: true },
+  { id: 4, type: 'progress', message: 'Bravo ! Vous avez maîtrisé le chapitre 3', time: '2j', read: true },
+];
+
+export const STUDENT_STATS = {
+  totalCourses: 3,
+  completedChapters: 5,
+  totalPoints: 1240,
+  streak: 7,
+  weeklyTime: 4.5,
+  quizAverage: 76,
+  masteredFlashcards: 12,
+  progression: [
+    { day: 'Lun', time: 45 },
+    { day: 'Mar', time: 90 },
+    { day: 'Mer', time: 30 },
+    { day: 'Jeu', time: 120 },
+    { day: 'Ven', time: 60 },
+    { day: 'Sam', time: 85 },
+    { day: 'Dim', time: 20 },
+  ],
+  subjectScores: [
+    { subject: 'Algo', score: 78 },
+    { subject: 'BDD', score: 65 },
+    { subject: 'React', score: 82 },
+    { subject: 'Maths', score: 55 },
+  ],
+};
+
+export const PROFESSOR_STATS = {
+  totalCourses: 4,
+  totalStudents: 456,
+  avgRating: 4.7,
+  totalViews: 3240,
+  studentProgress: [
+    { name: 'Algo & Structures', students: 87, avgProgress: 58, avgScore: 72 },
+    { name: 'Bases de Données', students: 54, avgProgress: 41, avgScore: 68 },
+    { name: 'React.js', students: 112, avgProgress: 24, avgScore: 79 },
+    { name: 'Maths Discrètes', students: 203, avgProgress: 35, avgScore: 61 },
+  ],
+  weeklyActivity: [
+    { day: 'Lun', views: 120 },
+    { day: 'Mar', views: 210 },
+    { day: 'Mer', views: 180 },
+    { day: 'Jeu', views: 320 },
+    { day: 'Ven', views: 250 },
+    { day: 'Sam', views: 90 },
+    { day: 'Dim', views: 60 },
+  ],
+};
+
+export const CHAT_HISTORY = [
+  {
+    id: 1,
+    role: 'assistant',
+    content: 'Bonjour ! Je suis **Mɛsi**, votre assistant pédagogique. Je suis ici pour vous aider à comprendre vos cours. Quelle notion souhaitez-vous approfondir aujourd\'hui ?',
+    time: new Date(Date.now() - 300000),
+  },
+];
