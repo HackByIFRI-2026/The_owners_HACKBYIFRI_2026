@@ -19,7 +19,7 @@ async function verify() {
     try {
         console.log('2. Test de l\'API Gemini...');
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
         const result = await model.generateContent('Dis bonjour en une phrase.');
         console.log('✅ Gemini AI Réponse:', result.response.text());
     } catch (err) {

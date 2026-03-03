@@ -15,7 +15,7 @@ exports.askQuestion = async (req, res, next) => {
             return res.status(400).json({ success: false, message: 'Veuillez poser une question.' });
         }
 
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
         const systemInstruction = `
       Tu es Mɛsi, un assistant éducatif bienveillant et pédagogue intégré dans la plateforme e-learning "Kplɔ́n nǔ".
@@ -73,7 +73,7 @@ exports.generateFlashcards = async (req, res, next) => {
         }
 
         const count = numberOfCards || 10;
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
         const prompt = `
       Tu es un expert en pédagogie. À partir du contenu de cours ci-dessous, génère exactement ${count} flashcards de révision.
