@@ -1,4 +1,5 @@
 # Pitch Émotionnel — Kplɔ́n nǔ
+
 *(Durée : 2 minutes)*
 
 ---
@@ -33,7 +34,7 @@ Et pendant ce temps, ailleurs dans le monde, des étudiants ont accès à des tu
 
 **[0:50 - 1:25] — Notre réponse : Kplɔ́n nǔ**
 
-Kplɔ́n nǔ. En langue fon, ça veut simplement dire *"apprendre quelque chose"*.
+Kplɔ́n nǔ. En langue fon, ça veut simplement dire *"apprendre"*.
 
 C'est une plateforme éducative intelligente. Mais surtout, c'est une promesse :
 
