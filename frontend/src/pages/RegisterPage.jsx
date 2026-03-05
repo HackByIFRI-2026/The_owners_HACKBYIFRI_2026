@@ -1,0 +1,160 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { GraduationCap, ArrowRight, Loader2, Eye, EyeOff } from 'lucide-react';
+import { motion } from 'framer-motion';
+import useAuthStore from '../store/authStore';
+import { authService } from '../services/services';
+import toast from 'react-hot-toast';
+
+const RegisterPage = () => {
+    const [role, setRole] = useState('STUDENT');
+    const [form, setForm] = useState({ firstName: '', lastName: '', email: '', password: '', confirm: '', studyYear: '1', studentId: '', majors: '', expertiseField: '' });
+    const [showPw, setShowPw] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const { setAuth } = useAuthStore();
+    const navigate = useNavigate();
+
+    const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (form.password !== form.confirm) { toast.error('Mots de passe non identiques'); return; }
+        if (form.password.length < 8) { toast.error('Mot de passe trop court (min. 8 car.)'); return; }
+        setLoading(true);
+        try {
+            const payload = role === 'STUDENT'
+                ? { firstName: form.firstName, lastName: form.lastName, email: form.email, password: form.password, studyYear: form.studyYear, studentId: form.studentId, majors: form.majors.split(',').map(m => m.trim()).filter(Boolean) }
+                : { firstName: form.firstName, lastName: form.lastName, email: form.email, password: form.password, expertiseField: form.expertiseField };
+
+            const endpoint = role === 'STUDENT' ? authService.registerStudent : authService.registerProfessor;
+            const { data } = await endpoint(payload);
+            if (data.success) {
+                toast.success('Compte créé ! Redirection...');
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    const meRes = await import('../services/api').then(m => m.default.get('/auth/me'));
+                    setAuth(meRes.data.data, data.token);
+                    navigate('/dashboard');
+                } else {
+                    navigate('/login');
+                }
+            }
+        } catch (err) {
+            toast.error(err.response?.data?.message || 'Erreur lors de l\'inscription');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleGoogle = () => {
+        window.location.href = 'http://localhost:5002/api/v1/auth/google';
+    };
+
+    return (
+        <div className="min-h-screen flex items-center justify-center py-12 px-6 bg-void relative">
+            <div className="absolute inset-0 z-0 opacity-10 pointer-events-none"
+                style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="max-w-lg w-full relative z-10">
+                <div className="card relative overflow-hidden" style={{ padding: '36px 40px' }}>
+                    <div className="absolute top-0 left-0 w-full h-1" style={{ background: 'linear-gradient(90deg, var(--jade), var(--amber))' }} />
+
+                    <div className="text-center mb-8">
+                        <div style={{ width: 48, height: 48, background: 'var(--jade)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                            <GraduationCap size={24} color="white" />
+                        </div>
+                        <h2 className="text-3xl font-display">Initier l'admission</h2>
+                        <p className="mt-2 text-xs font-mono text-secondary uppercase tracking-widest">Créer votre compte</p>
+                    </div>
+
+                    {/* Role selector */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 24 }}>
+                        {[{ v: 'STUDENT', label: 'Étudiant', col: 'var(--amber)' }, { v: 'PROFESSOR', label: 'Professeur', col: 'var(--jade)' }].map(({ v, label, col }) => (
+                            <button key={v} type="button" onClick={() => setRole(v)} style={{ padding: '11px', borderRadius: 10, border: `2px solid ${role === v ? col : 'var(--border)'}`, background: role === v ? `${col}18` : 'var(--bg-raised)', color: role === v ? col : 'var(--text-secondary)', cursor: 'pointer', fontSize: 14, fontWeight: 600, transition: 'all 0.2s' }}>
+                                {label}
+                            </button>
+                        ))}
+                    </div>
+
+                    <form onSubmit={handleSubmit}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                            <div className="input-group">
+                                <label className="input-label">Prénom *</label>
+                                <input className="input-field" placeholder="Kodjo" value={form.firstName} onChange={e => set('firstName', e.target.value)} required />
+                            </div>
+                            <div className="input-group">
+                                <label className="input-label">Nom *</label>
+                                <input className="input-field" placeholder="Mensah" value={form.lastName} onChange={e => set('lastName', e.target.value)} required />
+                            </div>
+                        </div>
+
+                        <div className="input-group">
+                            <label className="input-label">Email *</label>
+                            <input className="input-field" type="email" placeholder="vous@exemple.com" value={form.email} onChange={e => set('email', e.target.value)} required />
+                        </div>
+
+                        {role === 'STUDENT' ? (
+                            <>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12 }}>
+                                    <div className="input-group">
+                                        <label className="input-label">Année *</label>
+                                        <select className="input-field" value={form.studyYear} onChange={e => set('studyYear', e.target.value)}>
+                                            {["L1", "L2", "L3", "M1", "M2"].map(y => <option key={y} value={y}>{y}</option>)}
+                                        </select>
+                                    </div>
+                                    <div className="input-group">
+                                        <label className="input-label">N° Matricule *</label>
+                                        <input className="input-field" placeholder="UAC/2024/001" value={form.studentId} onChange={e => set('studentId', e.target.value)} required />
+                                    </div>
+                                </div>
+                                <div className="input-group">
+                                    <label className="input-label">Filière(s) * <span style={{ fontWeight: 400, textTransform: 'none' }}>(séparées par virgule)</span></label>
+                                    <input className="input-field" placeholder="Informatique, Mathématiques..." value={form.majors} onChange={e => set('majors', e.target.value)} required />
+                                </div>
+                            </>
+                        ) : (
+                            <div className="input-group">
+                                <label className="input-label">Domaine d'expertise *</label>
+                                <input className="input-field" placeholder="Sciences Informatiques, Mathématiques..." value={form.expertiseField} onChange={e => set('expertiseField', e.target.value)} required />
+                            </div>
+                        )}
+
+                        <div className="input-group">
+                            <label className="input-label">Mot de passe *</label>
+                            <div style={{ position: 'relative' }}>
+                                <input className="input-field font-mono" type={showPw ? 'text' : 'password'} placeholder="Min. 8 caractères" value={form.password} onChange={e => set('password', e.target.value)} required style={{ paddingRight: 44 }} />
+                                <button type="button" onClick={() => setShowPw(!showPw)} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}>
+                                    {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
+                                </button>
+                            </div>
+                        </div>
+                        <div className="input-group">
+                            <label className="input-label">Confirmer le mot de passe *</label>
+                            <input className="input-field font-mono" type="password" placeholder="••••••••" value={form.confirm} onChange={e => set('confirm', e.target.value)} required />
+                        </div>
+
+                        <button type="submit" disabled={loading} className="btn btn-primary btn-full btn-lg" style={{ marginTop: 4 }}>
+                            {loading ? <Loader2 className="animate-spin h-5 w-5" /> : <>Créer mon compte <ArrowRight size={16} /></>}
+                        </button>
+                    </form>
+
+                    <div className="my-5 flex items-center">
+                        <div className="flex-grow" style={{ height: 1, background: 'var(--border)' }} />
+                        <span className="flex-shrink-0 mx-4 text-xs font-mono text-muted uppercase">ou</span>
+                        <div className="flex-grow" style={{ height: 1, background: 'var(--border)' }} />
+                    </div>
+                    <button onClick={handleGoogle} className="btn btn-secondary btn-full" style={{ fontSize: 13, fontFamily: 'var(--font-mono)' }}>
+                        <svg className="h-4 w-4" viewBox="0 0 24 24"><path d="M12.0003 4.75C13.7703 4.75 15.3553 5.36002 16.6053 6.54998L20.0303 3.125C17.9502 1.19 15.2353 0 12.0003 0C7.31028 0 3.25527 2.69 1.28027 6.60998L5.27028 9.70498C6.21525 6.86002 8.87028 4.75 12.0003 4.75Z" fill="#EA4335" /><path d="M23.49 12.275C23.49 11.49 23.415 10.73 23.3 10H12V14.51H18.47C18.18 15.99 17.34 17.25 16.08 18.1L19.945 21.1C22.2 19.01 23.49 15.92 23.49 12.275Z" fill="#4285F4" /><path d="M5.26498 14.2949C5.02498 13.5699 4.88501 12.7999 4.88501 11.9999C4.88501 11.1999 5.01998 10.4299 5.26498 9.7049L1.275 6.60986C0.46 8.22986 0 10.0599 0 11.9999C0 13.9399 0.46 15.7699 1.28 17.3899L5.26498 14.2949Z" fill="#FBBC05" /><path d="M12.0004 24.0001C15.2404 24.0001 17.9654 22.935 19.9454 21.095L16.0804 18.095C15.0054 18.82 13.6204 19.245 12.0004 19.245C8.8704 19.245 6.21537 17.135 5.26538 14.29L1.27539 17.385C3.25539 21.31 7.3104 24.0001 12.0004 24.0001Z" fill="#34A853" /></svg>
+                        Continuer avec Google
+                    </button>
+
+                    <p className="mt-5 text-center text-xs font-mono text-muted">
+                        Déjà matriculé ? <Link to="/login" className="text-amber hover:underline">Se connecter</Link>
+                    </p>
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
+export default RegisterPage;

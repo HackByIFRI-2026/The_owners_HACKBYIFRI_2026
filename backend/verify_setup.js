@@ -10,9 +10,9 @@ async function verify() {
     try {
         console.log('1. Connexion à MongoDB...');
         await mongoose.connect(process.env.MONGO_URI);
-        console.log('✅ MongoDB Connecté.');
+        console.log('[OK] MongoDB Connecté.');
     } catch (err) {
-        console.error('❌ MongoDB Erreur:', err.message);
+        console.error('[FAIL] MongoDB Erreur:', err.message);
     }
 
     // 2. Gemini AI
@@ -21,9 +21,9 @@ async function verify() {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
         const result = await model.generateContent('Dis bonjour en une phrase.');
-        console.log('✅ Gemini AI Réponse:', result.response.text());
+        console.log('[OK] Gemini AI Réponse:', result.response.text());
     } catch (err) {
-        console.error('❌ Gemini AI Erreur:', err.message);
+        console.error('[FAIL] Gemini AI Erreur:', err.message);
     }
 
     // 3. Cloudinary
@@ -34,9 +34,9 @@ async function verify() {
             api_key: process.env.CLOUDINARY_API_KEY,
             api_secret: process.env.CLOUDINARY_API_SECRET,
         });
-        console.log('✅ Cloudinary Configuré (vérification visuelle requise des clés).');
+        console.log('[OK] Cloudinary Configuré (vérification visuelle requise des clés).');
     } catch (err) {
-        console.error('❌ Cloudinary Erreur:', err.message);
+        console.error('[FAIL] Cloudinary Erreur:', err.message);
     }
 
     process.exit(0);

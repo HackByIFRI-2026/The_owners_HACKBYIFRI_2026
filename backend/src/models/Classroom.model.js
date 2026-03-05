@@ -63,11 +63,10 @@ const classroomSchema = new mongoose.Schema(
 // ================================================
 // Middleware : Génère un code d'invitation unique avant création
 // ================================================
-classroomSchema.pre('save', function (next) {
+classroomSchema.pre('save', function () {
     if (!this.inviteCode) {
         this.inviteCode = Math.random().toString(36).substring(2, 8).toUpperCase();
     }
-    next();
 });
 
 module.exports = mongoose.model('Classroom', classroomSchema);

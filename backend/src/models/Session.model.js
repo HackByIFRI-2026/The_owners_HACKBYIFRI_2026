@@ -70,11 +70,18 @@ const sessionSchema = new mongoose.Schema(
 );
 
 // Génère un roomId unique avant la sauvegarde
-sessionSchema.pre('save', function (next) {
+sessionSchema.pre('save', function () {
     if (!this.roomId) {
         this.roomId = `kplon-${this._id.toString()}`;
     }
-    next();
 });
+
+// Virtual pour le lien de réunion (Jitsi par défaut)
+sessionSchema.virtual('meetingUrl').get(function () {
+    return `https://meet.jit.si/${this.roomId}`;
+});
+
+sessionSchema.set('toJSON', { virtuals: true });
+sessionSchema.set('toObject', { virtuals: true });
 
 module.exports = mongoose.model('Session', sessionSchema);

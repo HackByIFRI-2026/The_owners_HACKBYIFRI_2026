@@ -19,7 +19,7 @@ const { uploadSubmission, uploadDocument } = require('../config/cloudinary');
 router
     .route('/')
     .get(protect, requireCompleteProfile, getExercises)
-    .post(protect, authorize('PROFESSOR'), uploadDocument.single('attachment'), createExercise);
+    .post(protect, authorize('PROFESSOR'), uploadDocument.single('file'), createExercise);
 
 // --- Soumission par un étudiant ---
 router.post('/:exerciseId/submit',

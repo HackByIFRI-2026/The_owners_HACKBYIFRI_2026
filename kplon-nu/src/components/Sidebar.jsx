@@ -3,15 +3,15 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import {
   LayoutDashboard, BookOpen, Brain, BarChart2, Bell,
-  Settings, LogOut, ChevronRight, Zap, FlashlightIcon,
-  GraduationCap, Users, PlusCircle, Star, MessageSquare,
-  Target, Trophy, Layers
+  Settings, LogOut, ChevronRight, Zap,
+  GraduationCap, Users, PlusCircle, Target, Layers, School, Menu, X
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const studentNav = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Tableau de bord' },
-  { to: '/courses', icon: BookOpen, label: 'Mes cours' },
+  { to: '/classrooms', icon: School, label: 'Mes salles' },
+  { to: '/courses', icon: BookOpen, label: 'Cours' },
   { to: '/ai-assistant', icon: Brain, label: 'Assistant Mɛsi' },
   { to: '/flashcards', icon: Layers, label: 'Flashcards' },
   { to: '/quiz', icon: Target, label: 'Quiz' },
@@ -21,8 +21,9 @@ const studentNav = [
 
 const professorNav = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Tableau de bord' },
+  { to: '/classrooms', icon: School, label: 'Mes salles' },
   { to: '/my-courses', icon: BookOpen, label: 'Mes cours' },
-  { to: '/create-course', icon: PlusCircle, label: 'Créer un cours' },
+  { to: '/create-course', icon: PlusCircle, label: 'Publier un cours' },
   { to: '/students', icon: Users, label: 'Étudiants' },
   { to: '/stats', icon: BarChart2, label: 'Statistiques' },
   { to: '/notifications', icon: Bell, label: 'Notifications', badge: 1 },
@@ -31,7 +32,7 @@ const professorNav = [
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = user?.role === 'professor' ? professorNav : studentNav;
   const initials = user?.name?.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
@@ -42,14 +43,14 @@ export default function Sidebar() {
     navigate('/login');
   };
 
-  return (
+  const sidebarContent = (
     <aside style={{
       width: 'var(--sidebar-width)',
       background: 'var(--bg-deep)',
       borderRight: '1px solid rgba(255,255,255,0.06)',
       height: '100vh',
       position: 'fixed',
-      top: 0, left: 0,
+      top: 0, left: mobileOpen ? 0 : undefined,
       display: 'flex',
       flexDirection: 'column',
       zIndex: 100,
@@ -81,7 +82,6 @@ export default function Sidebar() {
       {/* User Card */}
       <div style={{ padding: '16px 20px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
         <NavLink to="/profile" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 'var(--radius-md)', transition: 'background 0.2s', textDecoration: 'none' }}
-          className={({ isActive }) => isActive ? 'profile-active' : ''}
           onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-raised)'}
           onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
         >
@@ -121,6 +121,7 @@ export default function Sidebar() {
           <NavLink
             key={to}
             to={to}
+            onClick={() => setMobileOpen(false)}
             style={({ isActive }) => ({
               display: 'flex',
               alignItems: 'center',
@@ -159,6 +160,7 @@ export default function Sidebar() {
       <div style={{ padding: '12px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <NavLink
           to="/settings"
+          onClick={() => setMobileOpen(false)}
           style={({ isActive }) => ({
             display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px',
             borderRadius: 'var(--radius-md)', marginBottom: 2,
@@ -180,5 +182,38 @@ export default function Sidebar() {
         </button>
       </div>
     </aside>
+  );
+
+  return (
+    <>
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div
+          onClick={() => setMobileOpen(false)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 99, display: 'none' }}
+          className="mobile-overlay"
+        />
+      )}
+
+      {/* Mobile hamburger button */}
+      <button
+        onClick={() => setMobileOpen(!mobileOpen)}
+        className="mobile-menu-btn"
+        style={{
+          display: 'none',
+          position: 'fixed', top: 14, left: 14, zIndex: 110,
+          background: 'var(--bg-surface)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: 8,
+          padding: 8,
+          cursor: 'pointer',
+          color: 'var(--text-primary)',
+        }}
+      >
+        {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
+      {sidebarContent}
+    </>
   );
 }

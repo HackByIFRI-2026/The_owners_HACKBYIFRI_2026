@@ -65,17 +65,25 @@ exports.getVideoById = async (req, res, next) => {
  */
 exports.createVideo = async (req, res, next) => {
     try {
-        const { title, description, commentsEnabled } = req.body;
+        const { title, description, videoUrl: bodyVideoUrl, commentsEnabled } = req.body;
 
-        if (!req.file) {
-            return res.status(400).json({ success: false, message: 'Aucun fichier vidéo fourni.' });
+        let finalVideoUrl = bodyVideoUrl;
+        let publicId = null;
+
+        if (req.file) {
+            finalVideoUrl = req.file.path;
+            publicId = req.file.filename;
+        }
+
+        if (!finalVideoUrl) {
+            return res.status(400).json({ success: false, message: 'Veuillez fournir un fichier vidéo ou un lien.' });
         }
 
         const video = await Video.create({
             title,
             description,
-            videoUrl: req.file.path,
-            videoPublicId: req.file.filename,
+            videoUrl: finalVideoUrl,
+            videoPublicId: publicId,
             author: req.user._id,
             commentsEnabled: commentsEnabled !== undefined ? commentsEnabled : true,
         });

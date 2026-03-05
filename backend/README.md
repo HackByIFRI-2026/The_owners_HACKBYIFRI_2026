@@ -4,7 +4,7 @@ API RESTful complète pour la plateforme e-learning **Kplɔ́n nǔ**, construite
 
 ---
 
-## 📁 Arborescence du projet
+## Arborescence du projet
 
 ```
 backend/
@@ -54,7 +54,7 @@ backend/
 
 ---
 
-## ⚙️ Installation locale
+## Installation locale
 
 ### Prérequis
 - Node.js **v18+**
@@ -84,7 +84,7 @@ Le serveur démarre sur **http://localhost:5000**
 
 ---
 
-## 🔐 Variables d'environnement (`.env`)
+## Variables d'environnement
 
 | Variable | Description | Exemple |
 |---|---|---|
@@ -104,7 +104,7 @@ Le serveur démarre sur **http://localhost:5000**
 
 ---
 
-## 🌍 Endpoints API principaux
+## Endpoints API principaux
 
 La documentation interactive complète est disponible sur **`/api/v1/docs`** (Swagger UI).
 
@@ -174,7 +174,7 @@ La documentation interactive complète est disponible sur **`/api/v1/docs`** (Sw
 
 ---
 
-## 🚀 Déploiement en production
+## Déploiement en production
 
 ### Option 1 : Render (Recommandé — gratuit, supporte Node.js en continu)
 
@@ -233,7 +233,7 @@ Dans [Google Cloud Console](https://console.cloud.google.com) > Identifiants > V
 
 ---
 
-## 🛠 Guide de maintenance
+## Guide de maintenance
 
 ### Ajouter une nouvelle entité
 1. Créer le modèle dans `src/models/NomEntite.model.js`
@@ -244,7 +244,7 @@ Dans [Google Cloud Console](https://console.cloud.google.com) > Identifiants > V
 ### Modifier un modèle Mongoose existant
 - Ajouter le champ avec une valeur `default` pour ne pas casser les documents existants
 - Mettre à jour la validation Joi dans le controller correspondant
-- ⚠️ Ne jamais supprimer un champ sans migration préalable
+- Attention: Ne jamais supprimer un champ sans migration préalable
 
 ### Règles de sécurité absolues
 - **Ne jamais** exposer le `JWT_SECRET` ou les clés API dans le code source

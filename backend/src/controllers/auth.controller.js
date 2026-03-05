@@ -37,7 +37,6 @@ exports.registerStudent = async (req, res, next) => {
         }
 
         const { firstName, lastName, email, password, studyYear, studentId, majors } = req.body;
-
         const exists = await User.findOne({ email });
         if (exists) {
             return res.status(409).json({ success: false, message: 'Un compte avec cet email existe déjà.' });
@@ -203,4 +202,39 @@ exports.completeProfile = async (req, res, next) => {
  */
 exports.getMe = async (req, res) => {
     res.status(200).json({ success: true, data: req.user });
+};
+
+/**
+ * @desc    Mettre à jour le profil (avatar, infos de base)
+ * @route   PUT /api/v1/auth/profile
+ * @access  Private
+ */
+exports.updateProfile = async (req, res, next) => {
+    try {
+        console.log('--- UPDATE PROFILE DEBUG ---');
+        console.log('req.body:', req.body);
+        console.log('req.file:', req.file);
+        console.log('----------------------------');
+
+        const { firstName, lastName, email } = req.body;
+        const updateData = {};
+
+        if (firstName) updateData.firstName = firstName;
+        if (lastName) updateData.lastName = lastName;
+        if (email) updateData.email = email;
+
+        // If an image was uploaded via Cloudinary multer
+        if (req.file) {
+            updateData.avatar = req.file.path;
+        }
+
+        const user = await User.findByIdAndUpdate(req.user._id, updateData, {
+            new: true,
+            runValidators: true,
+        }).select('-password');
+
+        res.status(200).json({ success: true, data: user });
+    } catch (err) {
+        next(err);
+    }
 };

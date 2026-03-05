@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
     createClassroom, getMyClassrooms, getMyEnrollments,
-    getClassroomById, joinClassroom, validateStudents, getPendingStudents
+    getClassroomById, joinClassroom, validateStudents, getPendingStudents, getMyStudentsStats
 } = require('../controllers/classroom.controller');
 const { protect, authorize, requireCompleteProfile } = require('../middlewares/auth.middleware');
 const { checkClassroomLimit } = require('../middlewares/plan.middleware');
@@ -82,6 +82,18 @@ router.get('/my-enrollments', protect, authorize('STUDENT'), getMyEnrollments);
  *       200: { description: Demande envoyée }
  */
 router.post('/join', protect, requireCompleteProfile, authorize('STUDENT'), joinClassroom);
+
+/**
+ * @swagger
+ * /classrooms/my-students-stats:
+ *   get:
+ *     summary: Obtenir les statistiques des étudiants de mes salles
+ *     tags: [Salles de classe]
+ *     security: [{ BearerAuth: [] }]
+ *     responses:
+ *       200: { description: Liste des étudiants agrégés }
+ */
+router.get('/my-students-stats', protect, authorize('PROFESSOR'), getMyStudentsStats);
 
 /**
  * @swagger

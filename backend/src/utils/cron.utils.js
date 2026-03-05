@@ -12,9 +12,9 @@ const resetBotQuota = cron.schedule('0 0 * * *', async () => {
             { plan: 'FREE', botQuestionsToday: { $gt: 0 } },
             { $set: { botQuestionsToday: 0 } }
         );
-        console.log(`[CRON] ✅ Quota Bot Mɛsi réinitialisé pour ${result.modifiedCount} utilisateur(s).`);
+        console.log(`[CRON] [OK] Quota Bot Mɛsi réinitialisé pour ${result.modifiedCount} utilisateur(s).`);
     } catch (err) {
-        console.error('[CRON] ❌ Erreur lors de la réinitialisation du quota bot:', err.message);
+        console.error('[CRON] [FAIL] Erreur lors de la réinitialisation du quota bot:', err.message);
     }
 }, {
     scheduled: false, // Sera démarré manuellement dans server.js

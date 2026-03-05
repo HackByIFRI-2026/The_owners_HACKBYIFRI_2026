@@ -26,8 +26,8 @@ const exerciseSchema = new mongoose.Schema(
         },
         type: {
             type: String,
-            enum: ['EXERCISE', 'TP'],
-            required: [true, 'Le type (EXERCISE ou TP) est requis'],
+            enum: ['EXERCISE', 'TP', 'HOMEWORK', 'PROJECT', 'EXAM'],
+            required: [true, 'Le type est requis'],
         },
         dueDate: {
             type: Date,

@@ -8,7 +8,8 @@ const errorHandler = (err, req, res, next) => {
 
     // Log de l'erreur en développement
     if (process.env.NODE_ENV === 'development') {
-        console.error('💥 Error:', err);
+        console.error('[ERROR] Error:', err);
+        if (err.stack) console.error('[STACK] Stack:', err.stack);
     }
 
     // Mauvais ID Mongoose (CastError)

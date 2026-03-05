@@ -2,7 +2,7 @@
 
 Bienvenue dans le dépôt du projet **Kplɔ́n nǔ** (Apprendre quelque chose), une solution E-learning moderne intégrant des fonctionnalités de Visioconférence, de Streaming Vidéo classique (YouTube-like) et un assistant d'Intelligence Artificielle (Mɛsi).
 
-## 📖 Sommaire
+## Sommaire
 1. [Architecture Globale](#architecture-globale)
 2. [Prérequis](#prérequis)
 3. [Comment Démarrer (Installation)](#comment-démarrer)
@@ -11,7 +11,7 @@ Bienvenue dans le dépôt du projet **Kplɔ́n nǔ** (Apprendre quelque chose), 
 
 ---
 
-## 🏗 Architecture Globale
+## Architecture Globale
 Le projet suit une architecture découplée (Séparation des préoccupations).
 - **Backend** : Node.js / Express.js (REST API, WebSockets via Socket.io).
 - **Frontend** : React.js (Vite ou Next.js) avec Tailwind CSS.
@@ -20,7 +20,7 @@ Le projet suit une architecture découplée (Séparation des préoccupations).
 
 ---
 
-## ⚙️ Prérequis
+## Prérequis
 Avant de manipuler le projet, assurez-vous d'avoir installé sur votre machine :
 - Node.js (v18+ recommandé)
 - npm, yarn ou pnpm
@@ -29,7 +29,7 @@ Avant de manipuler le projet, assurez-vous d'avoir installé sur votre machine :
 
 ---
 
-## 🚀 Comment Démarrer
+## Comment Démarrer
 
 ### 1. Backend
 Placez-vous dans le répertoire du backend :
@@ -59,7 +59,7 @@ Accédez à l'application via `http://localhost:5173` ou l'URL indiquée par le 
 
 ---
 
-## 🛠 Guide de Maintenance : Modifier le Projet sans "gâter" de fonctionnalités
+## Guide de Maintenance : Modifier le Projet sans "gâter" de fonctionnalités
 
 ### 1. Ajouter une nouvelle Route API (Backend)
 Pour garantir la stabilité de l'API :
@@ -85,7 +85,7 @@ Ne mettez **jamais** la logique de quota dans le Frontend pour masquer les bouto
 
 ---
 
-## 🌍 Hébergement et Déploiement
+## Hébergement et Déploiement
 
 ### Déploiement du Backend
 Le backend peut être déployé sur **Render**, **Railway**, ou **Fly.io** (Plateformes gérant Node.js en continu pour les WebSockets).

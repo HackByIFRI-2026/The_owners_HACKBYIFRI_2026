@@ -15,7 +15,7 @@ exports.askQuestion = async (req, res, next) => {
             return res.status(400).json({ success: false, message: 'Veuillez poser une question.' });
         }
 
-        const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const systemInstruction = `
       Tu es Mɛsi, un assistant éducatif bienveillant et pédagogue intégré dans la plateforme e-learning "Kplɔ́n nǔ".
@@ -34,7 +34,15 @@ exports.askQuestion = async (req, res, next) => {
       Question de l'étudiant: ${question}
     `;
 
-        const result = await model.generateContent(prompt);
+        // Timeout de 10 secondes
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('TIMEOUT')), 10000)
+        );
+
+        const result = await Promise.race([
+            model.generateContent(prompt),
+            timeoutPromise
+        ]);
         const answer = result.response.text();
 
         // Incrémenter le compteur de questions du jour pour les utilisateurs FREE
@@ -55,6 +63,18 @@ exports.askQuestion = async (req, res, next) => {
         });
     } catch (err) {
         console.error('Erreur Gemini API:', err.message);
+        if (err.message === 'TIMEOUT') {
+            return res.status(504).json({
+                success: false,
+                message: "Mɛsi met trop de temps à répondre. Veuillez réessayer.",
+            });
+        }
+        if (err.status === 503 || err.message.includes('503') || err.message.includes('high demand')) {
+            return res.status(503).json({
+                success: false,
+                message: "Mɛsi est actuellement très sollicité. Veuillez réessayer dans quelques instants.",
+            });
+        }
         next(err);
     }
 };
@@ -73,7 +93,7 @@ exports.generateFlashcards = async (req, res, next) => {
         }
 
         const count = numberOfCards || 10;
-        const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         const prompt = `
       Tu es un expert en pédagogie. À partir du contenu de cours ci-dessous, génère exactement ${count} flashcards de révision.
@@ -88,7 +108,16 @@ exports.generateFlashcards = async (req, res, next) => {
       ${courseContent}
     `;
 
-        const result = await model.generateContent(prompt);
+        // Timeout de 10 secondes
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('TIMEOUT')), 10000)
+        );
+
+        const result = await Promise.race([
+            model.generateContent(prompt),
+            timeoutPromise
+        ]);
+
         let responseText = result.response.text();
 
         // Nettoyer la réponse (enlever les backticks markdown si présents)
@@ -108,6 +137,12 @@ exports.generateFlashcards = async (req, res, next) => {
         });
     } catch (err) {
         console.error('Erreur génération flashcards Gemini:', err.message);
+        if (err.message === 'TIMEOUT') {
+            return res.status(504).json({
+                success: false,
+                message: "La génération des flashcards a pris trop de temps. Veuillez réessayer.",
+            });
+        }
         next(err);
     }
 };

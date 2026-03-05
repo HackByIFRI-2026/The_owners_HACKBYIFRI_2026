@@ -135,4 +135,18 @@ router.put('/complete-profile', protect, completeProfile);
  */
 router.get('/me', protect, getMe);
 
+const { uploadImage } = require('../config/cloudinary');
+const { updateProfile } = require('../controllers/auth.controller');
+
+/**
+ * @swagger
+ * /auth/profile:
+ *   put:
+ *     summary: Mettre à jour le profil (incluant l'avatar)
+ *     tags: [Authentification]
+ *     security: [{ BearerAuth: [] }]
+ */
+router.put('/profile', protect, uploadImage.single('avatar'), updateProfile);
+
+
 module.exports = router;

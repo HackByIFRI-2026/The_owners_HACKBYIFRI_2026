@@ -17,24 +17,24 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
-    console.log(`\n🚀 Serveur Kplɔ́n nǔ lancé en mode ${process.env.NODE_ENV} sur le port ${PORT}`);
-    console.log(`📖 Documentation API: http://localhost:${PORT}/api/v1/docs`);
-    console.log(`❤️  Health Check: http://localhost:${PORT}/api/v1/health\n`);
+    console.log(`\n[INFO] Serveur Kplɔ́n nǔ lancé en mode ${process.env.NODE_ENV} sur le port ${PORT}`);
+    console.log(`[DOCS] Documentation API: http://localhost:${PORT}/api/v1/docs`);
+    console.log(`[OK] Health Check: http://localhost:${PORT}/api/v1/health\n`);
 
     // Démarrer le cron job
     resetBotQuota.start();
-    console.log(`⏰ Cron Job "Réinitialisation quota Bot" démarré.`);
+    console.log(`[TASK] Cron Job "Réinitialisation quota Bot" démarré.`);
 });
 
 // ================================================
 // Gestion des erreurs non capturées
 // ================================================
 process.on('unhandledRejection', (err) => {
-    console.error(`\n💥 UnhandledRejection: ${err.message}`);
+    console.error(`\n[ERROR] UnhandledRejection: ${err.message}`);
     server.close(() => process.exit(1));
 });
 
 process.on('uncaughtException', (err) => {
-    console.error(`\n💥 UncaughtException: ${err.message}`);
+    console.error(`\n[CRITICAL] UncaughtException: ${err.message}`);
     process.exit(1);
 });

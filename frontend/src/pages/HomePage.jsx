@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Video, Bot, Users, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, BookOpen, Video, Bot, Users, ArrowUpRight, CheckCircle, Smartphone, Globe, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -7,160 +7,248 @@ const HomePage = () => {
         <div className="bg-void text-primary font-body overflow-hidden">
 
             {/* --- HERO SECTION --- */}
-            <section className="relative min-h-[90vh] flex items-center pt-20 pb-32 border-b border-white/5">
-                {/* Subtle structural grid background */}
-                <div className="absolute inset-0 z-0 opacity-20 pointer-events-none"
-                    style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
-                </div>
+            <section className="relative min-h-screen flex items-center pt-24 pb-20 border-b border-white/5">
+                {/* Background Blobs for depth */}
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-amber/5 blur-[120px] rounded-full"></div>
+                <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-violet/5 blur-[100px] rounded-full"></div>
 
                 <div className="container mx-auto px-6 z-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
                         {/* Text Content */}
-                        <div className="lg:col-span-7 staggger">
+                        <div className="lg:col-span-6">
                             <motion.div
                                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-                                className="inline-flex items-center gap-3 px-4 py-2 bg-surface border border-amber-border rounded-sm mb-8"
+                                className="inline-flex items-center gap-3 px-4 py-2 bg-amber/10 border border-amber/20 rounded-full mb-8 shadow-sm"
                             >
                                 <span className="w-2 h-2 bg-amber rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-                                <span className="font-mono text-xs uppercase tracking-widest text-amber">Kplɔ́n nǔ _ v1.0.0</span>
+                                <span className="font-mono text-xs uppercase tracking-widest text-amber font-semibold">L'excellence académique à portée de main</span>
                             </motion.div>
 
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
                                 className="text-5xl md:text-7xl font-display font-medium text-primary leading-[1.1] mb-8"
                             >
-                                L'Académie Numérique <br />
-                                <span className="text-secondary italic font-serif">Béninoise.</span>
+                                Apprenez sans <br />
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber to-jade italic font-serif">frontières.</span>
                             </motion.h1>
 
                             <motion.p
                                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
-                                className="text-lg text-secondary mb-12 max-w-xl leading-relaxed border-l-2 border-amber/30 pl-6"
+                                className="text-xl text-secondary mb-12 max-w-xl leading-relaxed"
                             >
-                                Une approche rigoureuse de l'apprentissage contemporain.
-                                Des grimoires numériques aux laboratoires virtuels, assistés par la conscience artificielle Mɛsi.
+                                Kplɔ́n nǔ est la plateforme d'apprentissage intelligente qui connecte les étudiants béninois à un savoir de qualité, assistée par l'IA <b>Mɛsi</b>.
                             </motion.p>
 
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-                                className="flex flex-col sm:flex-row gap-4"
+                                className="flex flex-col sm:flex-row gap-5"
                             >
-                                <Link to="/register" className="btn btn-primary group">
-                                    Initier l'admission
-                                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                <Link to="/register" className="btn btn-primary btn-lg group shadow-lg shadow-amber/10">
+                                    Rejoindre maintenant
+                                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                                 </Link>
-                                <Link to="/courses" className="btn btn-secondary group">
-                                    Consulter les archives publiques
-                                    <ArrowUpRight size={16} className="text-muted group-hover:text-primary transition-colors" />
+                                <Link to="/videos" className="btn btn-secondary btn-lg group">
+                                    Voir les cours publics
+                                    <Video size={18} className="text-muted group-hover:text-primary transition-colors" />
                                 </Link>
                             </motion.div>
-                        </div>
 
-                        {/* Visual/Abstract representation of AI Academic approach */}
-                        <div className="lg:col-span-5 hidden lg:flex justify-end relative">
                             <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}
-                                className="relative w-[400px] h-[500px] border border-white/10 bg-surface rounded-sm p-4 overflow-hidden"
+                                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
+                                className="mt-12 flex items-center gap-6"
                             >
-                                {/* Structural elements imitating a futuristic book/console */}
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-glow blur-3xl rounded-full"></div>
-                                <div className="absolute top-4 left-4 w-12 h-1 bg-amber/50"></div>
-                                <div className="absolute bottom-4 right-4 flex gap-2">
-                                    <div className="w-1 h-1 bg-secondary"></div>
-                                    <div className="w-1 h-1 bg-secondary"></div>
-                                    <div className="w-1 h-1 bg-amber"></div>
+                                <div className="flex -space-x-3">
+                                    {[1, 2, 3, 4].map(i => (
+                                        <div key={i} className="w-10 h-10 rounded-full border-2 border-void bg-raised flex items-center justify-center text-[10px] font-bold overflow-hidden">
+                                            <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Student" />
+                                        </div>
+                                    ))}
+                                    <div className="w-10 h-10 rounded-full border-2 border-void bg-amber flex items-center justify-center text-[10px] font-bold text-white">+2K</div>
                                 </div>
-
-                                <div className="h-full w-full border border-white/5 bg-deep/50 p-6 flex flex-col justify-between font-mono text-xs text-muted relative z-10">
-                                    <div className="flex justify-between border-b border-white/10 pb-4">
-                                        <span>SYS.Mɛsi.Core</span>
-                                        <span className="text-jade">Actif</span>
-                                    </div>
-                                    <div className="space-y-4 my-auto">
-                                        <div className="h-2 w-3/4 bg-raised"></div>
-                                        <div className="h-2 w-1/2 bg-raised"></div>
-                                        <div className="h-2 w-5/6 bg-raised"></div>
-                                        <div className="h-2 w-2/3 bg-amber/20 mt-8"></div>
-                                        <p className="text-secondary opacity-70 mt-2">» Analyse des requêtes étudiants en cours...</p>
-                                    </div>
-                                    <div className="flex justify-between border-t border-white/10 pt-4">
-                                        <span>Flux: Salles [04]</span>
-                                        <span>Taux de réponse: 99.8%</span>
-                                    </div>
-                                </div>
+                                <p className="text-xs text-muted font-mono uppercase tracking-wider">Rejoint par plus de 2,000 étudiants</p>
                             </motion.div>
                         </div>
 
+                        {/* Visuel Human-Centered */}
+                        <div className="lg:col-span-6 relative">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}
+                                className="relative rounded-2xl overflow-hidden shadow-2xl z-10 aspect-[4/5] lg:aspect-auto"
+                            >
+                                <img
+                                    src="/students_hero_1772623043371.png"
+                                    alt="Étudiants apprenant ensemble"
+                                    className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700 hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent opacity-60"></div>
+
+                                {/* Floating UI card */}
+                                <motion.div
+                                    animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                    className="absolute bottom-8 left-8 right-8 p-6 bg-surface/80 backdrop-blur-md border border-white/10 rounded-xl"
+                                >
+                                    <div className="flex items-center gap-4 mb-3">
+                                        <div className="w-10 h-10 bg-jade/20 rounded-full flex items-center justify-center">
+                                            <CheckCircle size={20} className="text-jade" />
+                                        </div>
+                                        <div>
+                                            <div className="text-sm font-bold">Concept Maîtrisé</div>
+                                            <div className="text-xs text-muted font-mono">Algorithmique Graphes</div>
+                                        </div>
+                                    </div>
+                                    <div className="h-1.5 w-full bg-void rounded-full overflow-hidden">
+                                        <div className="h-full bg-jade w-4/5 animate-pulse"></div>
+                                    </div>
+                                </motion.div>
+                            </motion.div>
+
+                            {/* Decorative element */}
+                            <div className="absolute -top-10 -right-10 w-40 h-40 bg-violet/10 rounded-full blur-3xl -z-10"></div>
+                            <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-jade/10 rounded-full blur-[80px] -z-10"></div>
+                        </div>
+
                     </div>
                 </div>
             </section>
 
-            {/* --- INFRASTRUCTURE SECTION --- */}
-            <section className="py-32 bg-deep border-b border-white/5">
+            {/* --- FEATURES SECTION --- */}
+            <section id="ecosystem" className="py-32 bg-deep border-b border-white/5 relative">
                 <div className="container mx-auto px-6">
-                    <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8 border-b border-white/10 pb-8">
-                        <div className="max-w-2xl">
-                            <span className="font-mono text-xs text-amber tracking-widest uppercase block mb-4">01 — L'Infrastructure</span>
-                            <h2 className="text-3xl font-display text-primary">Les Piliers de l'Académie</h2>
-                        </div>
-                        <p className="text-secondary text-sm max-w-sm font-mono border-l border-white/10 pl-4">
-                            Notre architecture numérique est conçue pour maximiser la rétention des connaissances et l'interaction ciblée.
+                    <div className="text-center max-w-3xl mx-auto mb-20">
+                        <span className="font-mono text-xs text-amber tracking-widest uppercase block mb-4">01 — L'Écosystème</span>
+                        <h2 className="text-4xl md:text-5xl font-display text-primary mb-6">Tout ce dont vous avez besoin pour réussir.</h2>
+                        <p className="text-secondary text-lg">
+                            Une infrastructure complète alliant interaction humaine et intelligence artificielle pour un apprentissage sans friction.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <NodeCard
-                            number="001"
-                            icon={<Bot size={24} className="text-amber" />}
-                            title="Entité Mɛsi"
-                            description="Algorithme d'assistance pédagogique. Capable de vulgariser des concepts complexes et de générer des cartes d'ancrage mémoriel."
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <FeatureItem
+                            icon={<Bot size={32} className="text-amber" />}
+                            title="Assistant IA Mɛsi"
+                            description="Votre tuteur personnel disponible 24/7. Mɛsi ne vous donne pas la réponse, il vous guide pour que vous la trouviez vous-même."
                         />
-                        <NodeCard
-                            number="002"
-                            icon={<Video size={24} className="text-jade" />}
-                            title="Transmission Live"
-                            description="Canaux de communication synchrones à haute fidélité pour les séminaires magistraux, avec journalisation des présences."
+                        <FeatureItem
+                            icon={<Video size={32} className="text-jade" />}
+                            title="Cours & Lives"
+                            description="Accédez aux sessions en direct de vos professeurs ou révisez à votre rythme avec les archives vidéo haute définition."
                         />
-                        <NodeCard
-                            number="003"
-                            icon={<BookOpen size={24} className="text-coral" />}
-                            title="Chambre des Savoirs"
-                            description="Dépôt asynchrone de manuscrits (PDF) et archives audiovisuelles publiques accessibles à tous les initiés."
-                        />
-                        <NodeCard
-                            number="004"
-                            icon={<Users size={24} className="text-violet" />}
-                            title="Cellules d'Étude"
-                            description="Espaces reclus sous la tutelle d'un professeur pour la distribution d'épreuves et l'évaluation rigoureuse."
+                        <FeatureItem
+                            icon={<Shield size={32} className="text-violet" />}
+                            title="Salles Sécurisées"
+                            description="Un espace dédié pour chaque classe sous la direction d'un professeur. Soumettez vos travaux et recevez des corrections détaillées."
                         />
                     </div>
                 </div>
             </section>
 
-            {/* --- METRICS / CTA --- */}
-            <section className="py-24 bg-void relative overflow-hidden">
-                <div className="absolute bottom-0 right-0 w-1/2 h-full bg-surface skew-x-12 translate-x-32 border-l border-white/5 z-0"></div>
-                <div className="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between">
-                    <div className="max-w-xl">
-                        <h2 className="text-4xl font-display mb-6">Prêt à intégrer le cursus ?</h2>
-                        <p className="text-secondary font-mono text-sm leading-relaxed mb-8">
-                            L'accès aux laboratoires et aux cellules d'études privées nécessite une accréditation formelle.
-                            Les inscriptions pour la prochaine session académique sont ouvertes.
+            {/* --- HUMAN PROOF SECTION --- */}
+            <section className="py-32 bg-void">
+                <div className="container mx-auto px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                        <div className="order-2 lg:order-1 relative">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+                                className="rounded-2xl overflow-hidden shadow-2xl"
+                            >
+                                <img
+                                    src="/professor_teaching_1772623372106.png"
+                                    alt="Professeur enseignant"
+                                    className="w-full aspect-[4/3] object-cover"
+                                />
+                            </motion.div>
+                            <div className="absolute -bottom-6 -right-6 p-8 bg-surface border border-white/5 rounded-2xl shadow-xl max-w-xs">
+                                <p className="text-sm italic mb-4">"Kplɔ́n nǔ a transformé ma façon d'interagir avec mes étudiants. L'IA Mɛsi les aide à préparer le terrain."</p>
+                                <div className="text-xs font-bold font-mono text-amber">— Prof. Abdou, Informatique</div>
+                            </div>
+                        </div>
+
+                        <div className="order-1 lg:order-2">
+                            <span className="font-mono text-xs text-jade tracking-widest uppercase block mb-4">02 — La Vision</span>
+                            <h2 className="text-4xl font-display text-primary mb-8">L'éducation comme levier de transformation.</h2>
+                            <div className="space-y-6">
+                                <CheckItem title="Accessibilité Maximale" text="Interface optimisée pour les connexions bas débit et usage mobile." />
+                                <CheckItem title="Apprentissage Adaptatif" text="Des quiz et flashcards générés automatiquement par l'IA selon votre progression." />
+                                <CheckItem title="Communauté Solidaire" text="Échanges directs entre étudiants et professeurs dans des cellules d'étude." />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* --- PRICING SECTION --- */}
+            <section id="pricing" className="py-32 bg-deep border-b border-white/5 relative">
+                <div className="container mx-auto px-6">
+                    <div className="text-center max-w-3xl mx-auto mb-20">
+                        <span className="font-mono text-xs text-amber tracking-widest uppercase block mb-4">03 — Tarification</span>
+                        <h2 className="text-4xl md:text-5xl font-display text-primary mb-6">Investissez dans votre réussite.</h2>
+                        <p className="text-secondary text-lg">
+                            Des plans adaptés à tous les profils, de l'étudiant curieux à l'institution ambitieuse.
                         </p>
-                        <Link to="/register" className="btn btn-primary">Déposer une candidature</Link>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-8 mt-12 md:mt-0 font-mono text-sm border-l border-white/10 pl-8">
-                        <div>
-                            <span className="block text-3xl font-display text-amber mb-2">~</span>
-                            <span className="text-muted uppercase tracking-widest text-xs">Périmètre de cours</span>
-                            <p className="text-primary mt-1">Illimité</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                        {/* Tier Gratiuit */}
+                        <div className="p-10 rounded-3xl bg-surface/40 border border-white/5 flex flex-col hover:border-white/10 transition-colors">
+                            <h3 className="text-xl font-bold mb-2 text-primary">Découverte</h3>
+                            <div className="text-4xl font-display mb-4 text-primary">Gratuit</div>
+                            <p className="text-sm text-secondary mb-8">Idéal pour explorer la bibliothèque publique.</p>
+                            <ul className="space-y-5 mb-10 flex-1">
+                                <CheckItem title="Accès aux vidéos publiques" text="" />
+                                <CheckItem title="Profil étudiant simple" text="" />
+                                <CheckItem title="Rejoindre 1 salle de classe" text="" />
+                            </ul>
+                            <Link to="/register" className="btn btn-secondary w-full text-center block">Commencer</Link>
                         </div>
-                        <div>
-                            <span className="block text-3xl font-display text-jade mb-2">~</span>
-                            <span className="text-muted uppercase tracking-widest text-xs">Latence Mɛsi</span>
-                            <p className="text-primary mt-1">&lt; 1500ms</p>
+
+                        {/* Tier Premium */}
+                        <div className="p-10 rounded-3xl bg-gradient-to-b from-surface to-deep border border-amber/30 relative flex flex-col shadow-2xl shadow-amber/5 transform md:-translate-y-4">
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 bg-amber text-void text-xs font-bold rounded-full uppercase tracking-wider shadow-lg">
+                                Recommandé
+                            </div>
+                            <h3 className="text-xl font-bold mb-2 text-primary">Premium</h3>
+                            <div className="text-4xl font-display mb-1 text-primary">4.900 FCFA<span className="text-lg text-muted font-normal">/mois</span></div>
+                            <p className="text-sm text-secondary mb-8">L'expérience d'apprentissage sans limite avec l'IA.</p>
+                            <ul className="space-y-5 mb-10 flex-1">
+                                <CheckItem title="Toutes les vidéos & cours" text="" />
+                                <CheckItem title="Requêtes illimitées IA Mɛsi" text="" />
+                                <CheckItem title="Salles de classes illimitées" text="" />
+                                <CheckItem title="Génération automatique de Quiz" text="" />
+                            </ul>
+                            <Link to="/register" className="btn btn-primary w-full text-center block shadow-[0_0_15px_rgba(245,158,11,0.2)]">Devenir Premium</Link>
+                        </div>
+
+                        {/* Tier Institution */}
+                        <div className="p-10 rounded-3xl bg-surface/40 border border-white/5 flex flex-col hover:border-white/10 transition-colors">
+                            <h3 className="text-xl font-bold mb-2 text-primary">Institution</h3>
+                            <div className="text-4xl font-display mb-4 text-primary">Sur devis</div>
+                            <p className="text-sm text-secondary mb-8">Pour les universités et écoles supérieures.</p>
+                            <ul className="space-y-5 mb-10 flex-1">
+                                <CheckItem title="Licences étudiantes groupées" text="" />
+                                <CheckItem title="Comptes professeurs vérifiés" text="" />
+                                <CheckItem title="Tableau de bord administrateur" text="" />
+                                <CheckItem title="Support dédié 24/7" text="" />
+                            </ul>
+                            <a href="mailto:contact@kplon-nu.com" className="btn btn-secondary w-full text-center block">Nous contacter</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* --- FINAL CTA --- */}
+            <section className="py-24 px-6">
+                <div className="container mx-auto">
+                    <div className="bg-gradient-to-br from-surface to-deep border border-amber/20 rounded-3xl p-12 md:p-20 text-center relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-amber/5 blur-[100px] rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
+
+                        <h2 className="text-4xl md:text-6xl font-display mb-8 relative z-10">Prêt à transformer votre futur ?</h2>
+                        <p className="text-secondary text-lg mb-12 max-w-2xl mx-auto relative z-10 leading-relaxed">
+                            Rejoignez des milliers d'étudiants d'IFRI et d'ailleurs. L'admission est gratuite pour la session actuelle.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-6 justify-center relative z-10">
+                            <Link to="/register" className="btn btn-primary btn-xl">Commencer l'Inscription</Link>
+                            <Link to="/login" className="btn btn-secondary btn-xl">Accéder à mon Espace</Link>
                         </div>
                     </div>
                 </div>
@@ -170,28 +258,26 @@ const HomePage = () => {
     );
 };
 
-const NodeCard = ({ number, icon, title, description }) => {
-    return (
-        <div className="card card-hover group flex flex-col h-full bg-surface border-white/5 relative overflow-hidden rounded-sm hover:border-amber/30">
-            {/* Structural decoration */}
-            <div className="absolute top-0 right-0 p-4 font-mono text-[10px] text-muted opacity-50">{number}</div>
-            <div className="absolute top-full left-0 w-full h-[1px] bg-amber/50 group-hover:top-0 transition-all duration-500"></div>
-
-            <div className="w-12 h-12 flex items-center justify-center border border-white/10 bg-raised mb-8 rounded-sm shrink-0">
-                {icon}
-            </div>
-
-            <h3 className="text-xl font-display text-primary mb-3">{title}</h3>
-            <p className="text-secondary text-sm font-body leading-relaxed flex-grow">
-                {description}
-            </p>
-
-            <div className="mt-8 flex items-center gap-2 text-xs font-mono text-muted group-hover:text-amber transition-colors">
-                <div className="w-4 h-px bg-current"></div>
-                <span>Initialiser</span>
-            </div>
+const FeatureItem = ({ icon, title, description }) => (
+    <div className="p-8 bg-surface/40 border border-white/5 rounded-2xl hover:border-amber/30 transition-all duration-300 group">
+        <div className="mb-6 p-4 bg-raised rounded-xl w-fit group-hover:scale-110 transition-transform">
+            {icon}
         </div>
-    );
-};
+        <h3 className="text-xl font-display mb-4 text-primary">{title}</h3>
+        <p className="text-secondary text-sm leading-relaxed">{description}</p>
+    </div>
+);
+
+const CheckItem = ({ title, text }) => (
+    <div className="flex gap-4">
+        <div className="mt-1 w-5 h-5 rounded-full bg-jade/20 flex items-center justify-center shrink-0">
+            <CheckCircle size={14} className="text-jade" />
+        </div>
+        <div>
+            <h4 className="font-bold text-primary mb-1">{title}</h4>
+            <p className="text-secondary text-sm">{text}</p>
+        </div>
+    </div>
+);
 
 export default HomePage;

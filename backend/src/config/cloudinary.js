@@ -1,62 +1,73 @@
-const cloudinary = require('cloudinary').v2;
-// multer-storage-cloudinary v2 exports the constructor as the default export
-const CloudinaryStorage = require('multer-storage-cloudinary');
 const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// Crée le dossier Files à la racine du projet (au même niveau que backend/frontend)
+const uploadDir = path.join(__dirname, '../../../Files');
+console.log('--- UPLOAD CONFIG: Saving to', uploadDir);
 
-// ── Documents (PDF, DOC) ─────────────────────────────────────────────
-const documentStorage = new CloudinaryStorage({
-    cloudinary,
-    params: {
-        folder: 'kplon-nu/documents',
-        allowed_formats: ['pdf', 'doc', 'docx'],
-        resource_type: 'raw',
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Configuration du stockage local avec Multer
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, uploadDir);
     },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + uniqueSuffix + ext);
+    }
 });
 
-// ── Vidéos ───────────────────────────────────────────────────────────
-const videoStorage = new CloudinaryStorage({
-    cloudinary,
-    params: {
-        folder: 'kplon-nu/videos',
-        allowed_formats: ['mp4', 'mov', 'avi', 'mkv'],
-        resource_type: 'video',
-    },
-});
+const defaultUpload = multer({ storage: storage });
 
-// ── Soumissions (ZIP, RAR) ───────────────────────────────────────────
-const submissionStorage = new CloudinaryStorage({
-    cloudinary,
-    params: {
-        folder: 'kplon-nu/submissions',
-        allowed_formats: ['zip', 'rar', '7z', 'tar'],
-        resource_type: 'raw',
-    },
-});
+// Wrapper pour intercepter le fichier uploadé et lui donner une URL correcte
+const wrapSingle = (fieldName) => {
+    return (req, res, next) => {
+        console.log(`[MULTER DEBUG] Expecting field: ${fieldName}`);
+        defaultUpload.single(fieldName)(req, res, function (err) {
+            if (err) {
+                console.error(`[MULTER ERROR] for field ${fieldName}:`, err);
+                return next(err);
+            }
+            if (req.file) {
+                console.log(`[MULTER SUCCESS] File received: ${req.file.fieldname} -> ${req.file.filename}`);
+                const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+                const host = req.get('host'); // localhost:5002
+                // L'URL absolue pour servir le fichier statiquement au frontend
+                req.file.path = `${protocol}://${host}/Files/${req.file.filename}`;
+            }
+            next();
+        });
+    };
+};
 
-// ── Images (thumbnails, avatars) ─────────────────────────────────────
-const imageStorage = new CloudinaryStorage({
-    cloudinary,
-    params: {
-        folder: 'kplon-nu/images',
-        allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-    },
-});
-
-const uploadDocument = multer({ storage: documentStorage });
-const uploadVideo = multer({ storage: videoStorage });
-const uploadSubmission = multer({ storage: submissionStorage });
-const uploadImage = multer({ storage: imageStorage });
+// Simulation de l'API Cloudinary pour ne pas casser les contrôleurs existants
+const cloudinaryMock = {
+    uploader: {
+        destroy: async (publicId, options) => {
+            try {
+                if (!publicId) return { result: 'ok' };
+                const filePath = path.join(uploadDir, publicId);
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                }
+                return { result: 'ok' };
+            } catch (err) {
+                console.error("Erreur suppression de fichier local:", err);
+                return { result: 'error' };
+            }
+        }
+    }
+};
 
 module.exports = {
-    cloudinary,
-    uploadDocument,
-    uploadVideo,
-    uploadSubmission,
-    uploadImage,
+    cloudinary: cloudinaryMock,
+    uploadDocument: { single: wrapSingle },
+    uploadVideo: { single: wrapSingle },
+    uploadSubmission: { single: wrapSingle },
+    uploadImage: { single: wrapSingle },
 };

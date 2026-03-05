@@ -33,7 +33,7 @@ const Footer = () => {
                 <div className="md:col-span-3">
                     <h4 className="text-primary font-mono font-medium mb-6 tracking-widest text-xs uppercase opacity-80">Codex Légal</h4>
                     <ul className="space-y-4 text-sm">
-                        <li><a href="#" className="hover:text-jade transition-colors">Manifeste d'utilisation</a></li>
+                        <li><a href="/#ecosystem" className="hover:text-jade transition-colors">Manifeste d'utilisation</a></li>
                         <li><a href="#" className="hover:text-jade transition-colors">Protection des données</a></li>
                         <li><a href="#" className="hover:text-jade transition-colors">Protocole académique</a></li>
                     </ul>

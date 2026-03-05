@@ -95,13 +95,12 @@ const userSchema = new mongoose.Schema(
 // ================================================
 // Middleware Mongoose : Hash du mot de passe avant sauvegarde
 // ================================================
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
     // Ne hashe que si le mot de passe a été modifié
-    if (!this.isModified('password') || !this.password) return next();
+    if (!this.isModified('password') || !this.password) return;
 
     const salt = await bcrypt.genSalt(12);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
 });
 
 // ================================================
